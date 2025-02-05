@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เครื่องมือสุ่มธาตุ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>เครื่องมือสุ่มธาตุ</h1>
+    <button onclick="generateRandomElements()">สุ่มธาตุ</button>
+    
+    <div class="result" id="result"></div>
+
+    <script>
+        const elements = ["ไฟ", "น้ำ", "ดิน", "ลม", "แสง", "มืด", "สายฟ้า", "น้ำแข็ง"];
+        const levels = ["ต่ำ", "กลาง", "สูง", "สูงสุด"];
+
+        function getRandomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function getRandomElement() {
+            const randomIndex = getRandomNumber(0, elements.length - 1);
+            return elements[randomIndex];
+        }
+
+        function getRandomLevel() {
+            const randomIndex = getRandomNumber(0, levels.length - 1);
+            return levels[randomIndex];
+        }
+
+        function generateRandomElements() {
+            let remainingElements = [...elements]; // สร้างสำเนาของรายการธาตุเพื่อไม่ให้ข้อมูลถูกเปลี่ยนแปลง
+            const numElements = getRandomNumber(1, remainingElements.length);
+            let resultHtml = `<h2>ธาตุสุ่ม (${numElements} ธาตุ)</h2><ul>`;
+            
+            for (let i = 0; i < numElements; i++) {
+                const randomIndex = getRandomNumber(0, remainingElements.length - 1);
+                const element = remainingElements[randomIndex];
+                const level = getRandomLevel();
+
+                resultHtml += `<li>${element} - ระดับ: ${level}</li>`;
+
+                // ลบธาตุที่สุ่มออกจากรายการเพื่อไม่ให้ซ้ำ
+                remainingElements.splice(randomIndex, 1);
+            }
+
+            resultHtml += "</ul>";
+            document.getElementById("result").innerHTML = resultHtml;
+        }
+    </script>
+    
+</body>
+</html>
