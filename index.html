@@ -17,6 +17,11 @@
         }
         .result {
             margin-top: 20px;
+            font-size: 18px;
+        }
+        .magic {
+            font-weight: bold;
+            color: #007bff;
         }
     </style>
 </head>
@@ -35,34 +40,22 @@
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
 
-        function getRandomElement() {
-            const randomIndex = getRandomNumber(0, elements.length - 1);
-            return elements[randomIndex];
-        }
-
-        function getRandomLevel() {
-            const randomIndex = getRandomNumber(0, levels.length - 1);
-            return levels[randomIndex];
-        }
-
         function generateRandomElements() {
-            let remainingElements = [...elements]; // สร้างสำเนาของรายการธาตุเพื่อไม่ให้ข้อมูลถูกเปลี่ยนแปลง
+            let remainingElements = [...elements];
             const numElements = getRandomNumber(1, remainingElements.length);
-            let resultHtml = `<h2>ธาตุสุ่ม (${numElements} ธาตุ)</h2><ul>`;
-            
+            let results = [];
+
             for (let i = 0; i < numElements; i++) {
                 const randomIndex = getRandomNumber(0, remainingElements.length - 1);
                 const element = remainingElements[randomIndex];
-                const level = getRandomLevel();
+                const level = levels[getRandomNumber(0, levels.length - 1)];
 
-                resultHtml += `<li>${element} - ระดับ: ${level}</li>`;
+                results.push(`${i + 1}. <span class="magic">เวทมนต์ :</span> ธาตุ : ${element} - ระดับ: ${level}`);
 
-                // ลบธาตุที่สุ่มออกจากรายการเพื่อไม่ให้ซ้ำ
                 remainingElements.splice(randomIndex, 1);
             }
 
-            resultHtml += "</ul>";
-            document.getElementById("result").innerHTML = resultHtml;
+            document.getElementById("result").innerHTML = results.join("<br>");
         }
     </script>
     
